@@ -4,13 +4,20 @@ import { useClub } from "@/hooks/useClub";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+  console.log("user pathname", pathname);
+
   const { club, loading } = useClub();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const navigationItems = [
     { name: "Trang Chủ", href: "/" },
@@ -20,10 +27,54 @@ const Header = () => {
     { name: "Sự kiện", href: "/events" },
     { name: "Tài liệu", href: "/documents" },
     { name: "Liên hệ", href: "/contact" },
-    // { name: "Chat", href: "/chat" },
+
     { name: "Quiz", href: "/quiz" },
     { name: "Admin", href: "/admin" },
   ];
+
+  if (!mounted) {
+    return (
+      <header className="bg-gradient-to-r from-[#2d2d66] via-[#2d2d66] to-[#2d2d66] shadow-xl sticky top-0 z-50 backdrop-blur-sm border-b border-white/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            {/* Logo */}
+            <div className="flex items-center flex-shrink-0">
+              <Link href="/" className="group">
+                <div className="relative w-16 h-16 group-hover:scale-105 transition-transform duration-200 bg-white/20 rounded-full p-2 shadow-lg">
+                  <Image
+                    src="/logo/logo-simple.svg"
+                    alt="Logo"
+                    width={48}
+                    height={48}
+                    className="object-contain drop-shadow-lg"
+                  />
+                </div>
+              </Link>
+            </div>
+            {/* Placeholder for navigation */}
+            <div className="hidden lg:flex items-center justify-center flex-1 mx-8">
+              <div className="flex space-x-2">
+                {navigationItems.map((item) => (
+                  <div
+                    key={item.name}
+                    className="px-4 py-2 rounded-lg text-sm font-medium text-white/90"
+                  >
+                    {item.name}
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Mobile menu button placeholder */}
+            <div className="lg:hidden flex-shrink-0">
+              <div className="p-3 rounded-xl text-white">
+                <FaBars className="w-6 h-6" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
 
   return (
     <header className="bg-gradient-to-r from-[#2d2d66] via-[#2d2d66] to-[#2d2d66] shadow-xl sticky top-0 z-50 backdrop-blur-sm border-b border-white/20">
