@@ -2,7 +2,7 @@
 
 import { RichTextEditor } from "@/components/admin/shared/rich-text-editor";
 import {
-  embedContent,
+  createEmbedding,
   generateImprovedContent,
   generateSummary,
   generateTags,
@@ -423,7 +423,7 @@ export const EditEvent = ({ eventId }: EditEventProps) => {
           "Creating embedding for content:",
           contentForEmbedding.substring(0, 200) + "..."
         );
-        embedding = await embedContent(contentForEmbedding);
+        embedding = await createEmbedding(contentForEmbedding);
         console.log("Embedding result:", embedding.length, "dimensions");
       } else {
         console.log("✅ Using existing embedding (no content changes)");

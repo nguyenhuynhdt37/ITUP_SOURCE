@@ -102,13 +102,19 @@ export const Analytics = () => {
       const totalNews = news.length;
       const totalDocuments = documents.length;
 
-      const totalViews = news.reduce((sum, item) => sum + (item.views || 0), 0);
-      const totalLikes = news.reduce((sum, item) => sum + (item.likes || 0), 0);
+      const totalViews = news.reduce(
+        (sum, item: any) => sum + (item.views || 0),
+        0
+      );
+      const totalLikes = news.reduce(
+        (sum, item: any) => sum + (item.likes || 0),
+        0
+      );
 
       const currentMonth = new Date().getMonth();
       const currentYear = new Date().getFullYear();
-      const newMembersThisMonth = members.filter((member) => {
-        const memberDate = new Date(member.created_at);
+      const newMembersThisMonth = members.filter((member: any) => {
+        const memberDate = new Date(member.created_at as string);
         return (
           memberDate.getMonth() === currentMonth &&
           memberDate.getFullYear() === currentYear
@@ -116,11 +122,13 @@ export const Analytics = () => {
       }).length;
 
       const upcomingEvents = events.filter(
-        (event) =>
+        (event: any) =>
           new Date(event.start_time) > new Date() && !event.is_cancelled
       ).length;
 
-      const publishedNews = news.filter((item) => item.is_published).length;
+      const publishedNews = news.filter(
+        (item: any) => item.is_published
+      ).length;
 
       setData({
         totalMembers,
@@ -190,7 +198,10 @@ export const Analytics = () => {
         events: events.data?.length || 0,
         news: news.data?.length || 0,
         views:
-          views.data?.reduce((sum, item) => sum + (item.views || 0), 0) || 0,
+          views.data?.reduce(
+            (sum: number, item: any) => sum + (item.views || 0),
+            0
+          ) || 0,
       });
     }
 
@@ -217,19 +228,19 @@ export const Analytics = () => {
     ]);
 
     const activities = [
-      ...(recentMembers.data || []).map((item) => ({
+      ...(recentMembers.data || []).map((item: any) => ({
         type: "member",
         title: item.full_name,
         date: item.created_at,
         count: 1,
       })),
-      ...(recentEvents.data || []).map((item) => ({
+      ...(recentEvents.data || []).map((item: any) => ({
         type: "event",
         title: item.title,
         date: item.created_at,
         count: 1,
       })),
-      ...(recentNews.data || []).map((item) => ({
+      ...(recentNews.data || []).map((item: any) => ({
         type: "news",
         title: item.title,
         date: item.created_at,

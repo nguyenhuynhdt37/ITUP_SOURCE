@@ -3,7 +3,7 @@
 import { RichTextEditor } from "@/components/admin/shared/rich-text-editor";
 import { TagSuggestions } from "@/components/admin/shared/tag-suggestions";
 import {
-  embedContent,
+  createEmbedding,
   generateArticleFromIdea,
   generateArticleIdeas,
   generateImprovedContent,
@@ -407,7 +407,7 @@ export const CreateNew = () => {
           contentForEmbedding.substring(0, 200) + "..."
         );
 
-        embedding = await embedContent(contentForEmbedding);
+        embedding = await createEmbedding(contentForEmbedding);
         console.log(
           "Embedding created successfully:",
           embedding.length,

@@ -36,56 +36,7 @@ export const News = () => {
       if (error) {
         console.log("Error fetching news:", error);
         // Use mock data if database error
-        setNews([
-          {
-            id: "550e8400-e29b-41d4-a716-446655440001",
-            title: "Workshop React Native - Xây dựng ứng dụng mobile",
-            slug: "workshop-react-native-xay-dung-ung-dung-mobile",
-            summary:
-              "Học cách xây dựng ứng dụng mobile đa nền tảng với React Native...",
-            content: "Nội dung chi tiết về workshop React Native...",
-            thumbnail_url: null,
-            is_published: true,
-            published_at: "2024-12-15T10:00:00Z",
-            views: 245,
-            likes: 32,
-            created_at: "2024-12-15T10:00:00Z",
-            updated_at: "2024-12-15T10:00:00Z",
-            tags: ["Workshop", "Mobile"],
-          },
-          {
-            id: "550e8400-e29b-41d4-a716-446655440002",
-            title: "Cuộc thi Hackathon Innovation Challenge 2024",
-            slug: "cuoc-thi-hackathon-innovation-challenge-2024",
-            summary:
-              "Cuộc thi lập trình 48h với chủ đề 'Giải pháp số cho giáo dục'...",
-            content: "Nội dung chi tiết về cuộc thi Hackathon...",
-            thumbnail_url: null,
-            is_published: true,
-            published_at: "2024-12-14T15:30:00Z",
-            views: 189,
-            likes: 28,
-            created_at: "2024-12-14T15:30:00Z",
-            updated_at: "2024-12-14T15:30:00Z",
-            tags: ["Competition", "Hackathon"],
-          },
-          {
-            id: "550e8400-e29b-41d4-a716-446655440003",
-            title: "Seminar AI & Machine Learning 2024",
-            slug: "seminar-ai-machine-learning-2024",
-            summary:
-              "Buổi seminar về trí tuệ nhân tạo và học máy với các chuyên gia hàng đầu...",
-            content: "Nội dung chi tiết về seminar AI...",
-            thumbnail_url: null,
-            is_published: false,
-            published_at: null,
-            views: 0,
-            likes: 0,
-            created_at: "2024-12-13T09:15:00Z",
-            updated_at: "2024-12-13T09:15:00Z",
-            tags: ["Seminar", "AI"],
-          },
-        ]);
+        setNews([]);
         return;
       }
 

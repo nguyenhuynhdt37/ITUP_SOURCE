@@ -3,7 +3,7 @@
 import { RichTextEditor } from "@/components/admin/shared/rich-text-editor";
 import { TagSuggestions } from "@/components/admin/shared/tag-suggestions";
 import {
-  embedContent,
+  createEmbedding,
   generateSummary,
   generateTags,
   generateTitleSuggestions,
@@ -366,7 +366,7 @@ export const EditNews = ({ newsId }: EditNewsProps) => {
           "Creating embedding for content:",
           contentForEmbedding.substring(0, 200) + "..."
         );
-        embedding = await embedContent(contentForEmbedding);
+        embedding = await createEmbedding(contentForEmbedding);
         console.log("Embedding result:", embedding.length, "dimensions");
       } else {
         console.log("✅ Using existing embedding (no content changes)");

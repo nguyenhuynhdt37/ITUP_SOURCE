@@ -2,7 +2,7 @@
 
 import { RichTextEditor } from "@/components/admin/shared/rich-text-editor";
 import {
-  embedContent,
+  createEmbedding,
   generateArticleFromIdea,
   generateArticleIdeas,
   generateImprovedContent,
@@ -397,7 +397,7 @@ export const CreateEvent = () => {
         "Creating embedding for content:",
         contentForEmbedding.substring(0, 200) + "..."
       );
-      const embedding = await embedContent(contentForEmbedding);
+      const embedding = await createEmbedding(contentForEmbedding);
       console.log("Embedding result:", embedding.length, "dimensions");
 
       // Convert Vietnam time to UTC for database storage
