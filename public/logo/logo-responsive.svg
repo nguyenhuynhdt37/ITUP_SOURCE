@@ -1,0 +1,18 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+    <!-- Background Circle -->
+    <circle cx="100" cy="100" r="95" fill="#000033" stroke="white" stroke-width="8" />
+
+    <!-- IT UP Text -->
+    <text x="100" y="80" text-anchor="middle" fill="white" font-family="Arial, sans-serif"
+        font-size="24" font-weight="bold">IT</text>
+    <text x="100" y="110" text-anchor="middle" fill="white" font-family="Arial, sans-serif"
+        font-size="24" font-weight="bold">UP</text>
+
+    <!-- Decorative Elements -->
+    <circle cx="100" cy="140" r="3" fill="white" opacity="0.8" />
+    <circle cx="100" cy="150" r="2" fill="white" opacity="0.6" />
+    <circle cx="100" cy="158" r="1" fill="white" opacity="0.4" />
+
+    <!-- Border Accent -->
+    <circle cx="100" cy="100" r="88" fill="none" stroke="white" stroke-width="1" opacity="0.3" />
+</svg>

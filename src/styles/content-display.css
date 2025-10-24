@@ -1,0 +1,780 @@
+/* Global Content Display CSS - Override TailwindCSS for HTML content */
+
+/* Base content container */
+.content-display,
+.prose,
+.rich-content,
+.article-content,
+.event-content,
+.news-content {
+  font-family: Arial, sans-serif !important;
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+  color: #ffffff !important;
+  direction: ltr !important;
+  text-align: left !important;
+  /* Fix scroll flickering */
+  scroll-behavior: auto !important;
+  overscroll-behavior: contain !important;
+  contain: layout style paint !important;
+  isolation: isolate !important;
+  transform: none !important;
+  will-change: auto !important;
+}
+
+/* Headings - Override TailwindCSS */
+.content-display h1,
+.content-display h2,
+.content-display h3,
+.content-display h4,
+.content-display h5,
+.content-display h6,
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6,
+.rich-content h1,
+.rich-content h2,
+.rich-content h3,
+.rich-content h4,
+.rich-content h5,
+.rich-content h6,
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5,
+.article-content h6,
+.event-content h1,
+.event-content h2,
+.event-content h3,
+.event-content h4,
+.event-content h5,
+.event-content h6,
+.news-content h1,
+.news-content h2,
+.news-content h3,
+.news-content h4,
+.news-content h5,
+.news-content h6 {
+  display: block !important;
+  font-weight: bold !important;
+  color: #ffffff !important;
+  margin: 1em 0 0.5em 0 !important;
+  line-height: 1.2 !important;
+  font-family: Arial, sans-serif !important;
+  text-align: left !important;
+}
+
+.content-display h1,
+.prose h1,
+.rich-content h1,
+.article-content h1,
+.event-content h1,
+.news-content h1 {
+  font-size: 2em !important;
+}
+
+.content-display h2,
+.prose h2,
+.rich-content h2,
+.article-content h2,
+.event-content h2,
+.news-content h2 {
+  font-size: 1.5em !important;
+}
+
+.content-display h3,
+.prose h3,
+.rich-content h3,
+.article-content h3,
+.event-content h3,
+.news-content h3 {
+  font-size: 1.25em !important;
+}
+
+.content-display h4,
+.prose h4,
+.rich-content h4,
+.article-content h4,
+.event-content h4,
+.news-content h4 {
+  font-size: 1.1em !important;
+}
+
+.content-display h5,
+.prose h5,
+.rich-content h5,
+.article-content h5,
+.event-content h5,
+.news-content h5 {
+  font-size: 1em !important;
+}
+
+.content-display h6,
+.prose h6,
+.rich-content h6,
+.article-content h6,
+.event-content h6,
+.news-content h6 {
+  font-size: 0.9em !important;
+}
+
+/* Paragraphs */
+.content-display p,
+.prose p,
+.rich-content p,
+.article-content p,
+.event-content p,
+.news-content p {
+  display: block !important;
+  color: #ffffff !important;
+  margin: 0.5em 0 !important;
+  line-height: 1.6 !important;
+  font-family: Arial, sans-serif !important;
+  text-align: left !important;
+}
+
+/* Lists */
+.content-display ul,
+.content-display ol,
+.prose ul,
+.prose ol,
+.rich-content ul,
+.rich-content ol,
+.article-content ul,
+.article-content ol,
+.event-content ul,
+.event-content ol,
+.news-content ul,
+.news-content ol {
+  display: block !important;
+  margin: 0.5em 0 !important;
+  padding-left: 2em !important;
+  color: #ffffff !important;
+  list-style-position: outside !important;
+  font-family: Arial, sans-serif !important;
+}
+
+.content-display ul,
+.prose ul,
+.rich-content ul,
+.article-content ul,
+.event-content ul,
+.news-content ul {
+  list-style-type: disc !important;
+}
+
+.content-display ol,
+.prose ol,
+.rich-content ol,
+.article-content ol,
+.event-content ol,
+.news-content ol {
+  list-style-type: decimal !important;
+}
+
+.content-display li,
+.prose li,
+.rich-content li,
+.article-content li,
+.event-content li,
+.news-content li {
+  display: list-item !important;
+  color: #ffffff !important;
+  margin: 0.25em 0 !important;
+  font-family: Arial, sans-serif !important;
+}
+
+/* Blockquotes */
+.content-display blockquote,
+.prose blockquote,
+.rich-content blockquote,
+.article-content blockquote,
+.event-content blockquote,
+.news-content blockquote {
+  display: block !important;
+  margin: 1em 0 !important;
+  padding: 0.5em 1em !important;
+  border-left: 4px solid #3b82f6 !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+  color: #ffffff !important;
+  font-family: Arial, sans-serif !important;
+  font-style: italic !important;
+}
+
+/* Code blocks */
+.content-display pre,
+.prose pre,
+.rich-content pre,
+.article-content pre,
+.event-content pre,
+.news-content pre {
+  display: block !important;
+  margin: 1em 0 !important;
+  padding: 1em !important;
+  background: #1e1e1e !important;
+  border-radius: 8px !important;
+  color: #ffffff !important;
+  font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace !important;
+  overflow-x: auto !important;
+  border: 1px solid #333 !important;
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+}
+
+.content-display pre code,
+.prose pre code,
+.rich-content pre code,
+.article-content pre code,
+.event-content pre code,
+.news-content pre code {
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-family: inherit !important;
+  color: inherit !important;
+}
+
+/* Inline code */
+.content-display code,
+.prose code,
+.rich-content code,
+.article-content code,
+.event-content code,
+.news-content code {
+  background: #2d2d2d !important;
+  color: #f8f8f2 !important;
+  padding: 0.2em 0.4em !important;
+  border-radius: 4px !important;
+  font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace !important;
+  font-size: 0.9em !important;
+  border: 1px solid #444 !important;
+}
+
+/* Links */
+.content-display a,
+.prose a,
+.rich-content a,
+.article-content a,
+.event-content a,
+.news-content a {
+  color: #60a5fa !important;
+  text-decoration: underline !important;
+}
+
+.content-display a:hover,
+.prose a:hover,
+.rich-content a:hover,
+.article-content a:hover,
+.event-content a:hover,
+.news-content a:hover {
+  color: #93c5fd !important;
+}
+
+/* Text formatting */
+.content-display strong,
+.content-display b,
+.prose strong,
+.prose b,
+.rich-content strong,
+.rich-content b,
+.article-content strong,
+.article-content b,
+.event-content strong,
+.event-content b,
+.news-content strong,
+.news-content b {
+  font-weight: bold !important;
+  color: #ffffff !important;
+}
+
+.content-display em,
+.content-display i,
+.prose em,
+.prose i,
+.rich-content em,
+.rich-content i,
+.article-content em,
+.article-content i,
+.event-content em,
+.event-content i,
+.news-content em,
+.news-content i {
+  font-style: italic !important;
+  color: #ffffff !important;
+}
+
+.content-display u,
+.prose u,
+.rich-content u,
+.article-content u,
+.event-content u,
+.news-content u {
+  text-decoration: underline !important;
+  color: #ffffff !important;
+}
+
+/* Images */
+.content-display img,
+.prose img,
+.rich-content img,
+.article-content img,
+.event-content img,
+.news-content img {
+  max-width: 100% !important;
+  height: auto !important;
+  border-radius: 8px !important;
+  margin: 1em 0 !important;
+  display: block !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  /* Fix flickering issues */
+  image-rendering: auto !important;
+  image-rendering: crisp-edges !important;
+  image-rendering: -webkit-optimize-contrast !important;
+  backface-visibility: hidden !important;
+  will-change: auto !important;
+  /* Prevent layout shifts */
+  aspect-ratio: attr(width) / attr(height) !important;
+  object-fit: cover !important;
+  /* Smooth loading */
+  transition: opacity 0.3s ease !important;
+  opacity: 1 !important;
+  /* Prevent re-rendering flicker */
+  contain: layout style paint !important;
+  isolation: isolate !important;
+  /* Prevent image reloading */
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: optimize-contrast !important;
+  /* Fix scroll flickering */
+  transform: none !important;
+  position: relative !important;
+  z-index: 1 !important;
+  /* Prevent scroll-triggered re-rendering */
+  scroll-behavior: auto !important;
+  overscroll-behavior: contain !important;
+}
+
+/* Image loading states */
+.content-display img[src=""],
+.prose img[src=""],
+.rich-content img[src=""],
+.article-content img[src=""],
+.event-content img[src=""],
+.news-content img[src=""] {
+  opacity: 0 !important;
+  transition: opacity 0.3s ease !important;
+}
+
+.content-display img:not([src=""]),
+.prose img:not([src=""]),
+.rich-content img:not([src=""]),
+.article-content img:not([src=""]),
+.event-content img:not([src=""]),
+.news-content img:not([src=""]) {
+  opacity: 1 !important;
+  transition: opacity 0.3s ease !important;
+}
+
+/* Prevent image flicker on hover */
+.content-display img:hover,
+.prose img:hover,
+.rich-content img:hover,
+.article-content img:hover,
+.event-content img:hover,
+.news-content img:hover {
+  transform: none !important;
+  backface-visibility: hidden !important;
+}
+
+/* Fix scroll flickering */
+.content-display,
+.prose,
+.rich-content,
+.article-content,
+.event-content,
+.news-content {
+  /* Prevent scroll-triggered re-rendering */
+  scroll-behavior: auto !important;
+  overscroll-behavior: contain !important;
+  /* Force stable rendering */
+  contain: layout style paint !important;
+  isolation: isolate !important;
+  /* Prevent transform-based flickering */
+  transform: none !important;
+  will-change: auto !important;
+  /* Prevent image reloading during scroll */
+  -webkit-overflow-scrolling: touch !important;
+  /* Force GPU acceleration without transforms */
+  -webkit-backface-visibility: hidden !important;
+  -webkit-perspective: 1000px !important;
+  /* Prevent browser optimization that causes reloading */
+  image-rendering: auto !important;
+  image-rendering: crisp-edges !important;
+}
+
+/* Image scroll optimization */
+.content-display img,
+.prose img,
+.rich-content img,
+.article-content img,
+.event-content img,
+.news-content img {
+  /* Prevent scroll flickering */
+  position: relative !important;
+  z-index: 1 !important;
+  /* Stable rendering during scroll */
+  contain: layout style paint !important;
+  isolation: isolate !important;
+  /* No transforms during scroll */
+  transform: none !important;
+  /* Prevent re-rendering */
+  backface-visibility: hidden !important;
+  perspective: 1000px !important;
+  transform-style: flat !important;
+  /* Prevent image reloading */
+  will-change: auto !important;
+  /* Force stable rendering */
+  image-rendering: auto !important;
+  image-rendering: crisp-edges !important;
+  /* Prevent browser optimization that causes reloading */
+  -webkit-backface-visibility: hidden !important;
+  -webkit-transform: translateZ(0) !important;
+  -webkit-perspective: 1000px !important;
+  /* Prevent scroll-triggered reloading */
+  scroll-behavior: auto !important;
+  overscroll-behavior: contain !important;
+}
+
+/* Prevent image reloading during scroll */
+.content-display img,
+.prose img,
+.rich-content img,
+.article-content img,
+.event-content img,
+.news-content img {
+  /* Force browser to cache and not reload */
+  -webkit-transform: translateZ(0) !important;
+  -webkit-backface-visibility: hidden !important;
+  -webkit-perspective: 1000px !important;
+  /* Prevent reloading during scroll */
+  image-rendering: auto !important;
+  image-rendering: crisp-edges !important;
+  /* Force stable rendering */
+  contain: layout style paint !important;
+  isolation: isolate !important;
+  /* Prevent browser optimization that causes reloading */
+  will-change: auto !important;
+  /* Prevent scroll-triggered reloading */
+  scroll-behavior: auto !important;
+  overscroll-behavior: contain !important;
+  /* Force GPU layer */
+  transform: translateZ(0) !important;
+  backface-visibility: hidden !important;
+  perspective: 1000px !important;
+}
+
+/* Text alignment */
+.content-display [style*="text-align: left"],
+.prose [style*="text-align: left"],
+.rich-content [style*="text-align: left"],
+.article-content [style*="text-align: left"],
+.event-content [style*="text-align: left"],
+.news-content [style*="text-align: left"] {
+  text-align: left !important;
+}
+
+.content-display [style*="text-align: center"],
+.prose [style*="text-align: center"],
+.rich-content [style*="text-align: center"],
+.article-content [style*="text-align: center"],
+.event-content [style*="text-align: center"],
+.news-content [style*="text-align: center"] {
+  text-align: center !important;
+}
+
+.content-display [style*="text-align: right"],
+.prose [style*="text-align: right"],
+.rich-content [style*="text-align: right"],
+.article-content [style*="text-align: right"],
+.event-content [style*="text-align: right"],
+.news-content [style*="text-align: right"] {
+  text-align: right !important;
+}
+
+.content-display [style*="text-align: justify"],
+.prose [style*="text-align: justify"],
+.rich-content [style*="text-align: justify"],
+.article-content [style*="text-align: justify"],
+.event-content [style*="text-align: justify"],
+.news-content [style*="text-align: justify"] {
+  text-align: justify !important;
+}
+
+/* Tables */
+.content-display table,
+.prose table,
+.rich-content table,
+.article-content table,
+.event-content table,
+.news-content table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin: 1em 0 !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
+.content-display th,
+.content-display td,
+.prose th,
+.prose td,
+.rich-content th,
+.rich-content td,
+.article-content th,
+.article-content td,
+.event-content th,
+.event-content td,
+.news-content th,
+.news-content td {
+  padding: 0.75em !important;
+  text-align: left !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+.content-display th,
+.prose th,
+.rich-content th,
+.article-content th,
+.event-content th,
+.news-content th {
+  background: rgba(59, 130, 246, 0.2) !important;
+  font-weight: bold !important;
+}
+
+/* Horizontal rules */
+.content-display hr,
+.prose hr,
+.rich-content hr,
+.article-content hr,
+.event-content hr,
+.news-content hr {
+  border: none !important;
+  height: 1px !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  margin: 2em 0 !important;
+}
+
+/* Syntax highlighting for code blocks */
+.content-display pre .keyword,
+.prose pre .keyword,
+.rich-content pre .keyword,
+.article-content pre .keyword,
+.event-content pre .keyword,
+.news-content pre .keyword {
+  color: #569cd6 !important;
+}
+
+.content-display pre .string,
+.prose pre .string,
+.rich-content pre .string,
+.article-content pre .string,
+.event-content pre .string,
+.news-content pre .string {
+  color: #ce9178 !important;
+}
+
+.content-display pre .number,
+.prose pre .number,
+.rich-content pre .number,
+.article-content pre .number,
+.event-content pre .number,
+.news-content pre .number {
+  color: #b5cea8 !important;
+}
+
+.content-display pre .comment,
+.prose pre .comment,
+.rich-content pre .comment,
+.article-content pre .comment,
+.event-content pre .comment,
+.news-content pre .comment {
+  color: #6a9955 !important;
+  font-style: italic !important;
+}
+
+.content-display pre .function,
+.prose pre .function,
+.rich-content pre .function,
+.article-content pre .function,
+.event-content pre .function,
+.news-content pre .function {
+  color: #dcdcaa !important;
+}
+
+.content-display pre .variable,
+.prose pre .variable,
+.rich-content pre .variable,
+.article-content pre .variable,
+.event-content pre .variable,
+.news-content pre .variable {
+  color: #9cdcfe !important;
+}
+
+.content-display pre .operator,
+.prose pre .operator,
+.rich-content pre .operator,
+.article-content pre .operator,
+.event-content pre .operator,
+.news-content pre .operator {
+  color: #d4d4d4 !important;
+}
+
+.content-display pre .punctuation,
+.prose pre .punctuation,
+.rich-content pre .punctuation,
+.article-content pre .punctuation,
+.event-content pre .punctuation,
+.news-content pre .punctuation {
+  color: #d4d4d4 !important;
+}
+
+.content-display pre .class-name,
+.prose pre .class-name,
+.rich-content pre .class-name,
+.article-content pre .class-name,
+.event-content pre .class-name,
+.news-content pre .class-name {
+  color: #4ec9b0 !important;
+}
+
+.content-display pre .constant,
+.prose pre .constant,
+.rich-content pre .constant,
+.article-content pre .constant,
+.event-content pre .constant,
+.news-content pre .constant {
+  color: #4fc1ff !important;
+}
+
+.content-display pre .regex,
+.prose pre .regex,
+.rich-content pre .regex,
+.article-content pre .regex,
+.event-content pre .regex,
+.news-content pre .regex {
+  color: #d16969 !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .content-display,
+  .prose,
+  .rich-content,
+  .article-content,
+  .event-content,
+  .news-content {
+    font-size: 14px !important;
+  }
+
+  .content-display h1,
+  .prose h1,
+  .rich-content h1,
+  .article-content h1,
+  .event-content h1,
+  .news-content h1 {
+    font-size: 1.5em !important;
+  }
+
+  .content-display h2,
+  .prose h2,
+  .rich-content h2,
+  .article-content h2,
+  .event-content h2,
+  .news-content h2 {
+    font-size: 1.25em !important;
+  }
+
+  .content-display h3,
+  .prose h3,
+  .rich-content h3,
+  .article-content h3,
+  .event-content h3,
+  .news-content h3 {
+    font-size: 1.1em !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .content-display,
+  .prose,
+  .rich-content,
+  .article-content,
+  .event-content,
+  .news-content {
+    background: white !important;
+    color: black !important;
+  }
+
+  .content-display h1,
+  .content-display h2,
+  .content-display h3,
+  .content-display h4,
+  .content-display h5,
+  .content-display h6,
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6,
+  .rich-content h1,
+  .rich-content h2,
+  .rich-content h3,
+  .rich-content h4,
+  .rich-content h5,
+  .rich-content h6,
+  .article-content h1,
+  .article-content h2,
+  .article-content h3,
+  .article-content h4,
+  .article-content h5,
+  .article-content h6,
+  .event-content h1,
+  .event-content h2,
+  .event-content h3,
+  .event-content h4,
+  .event-content h5,
+  .event-content h6,
+  .news-content h1,
+  .news-content h2,
+  .news-content h3,
+  .news-content h4,
+  .news-content h5,
+  .news-content h6 {
+    color: black !important;
+  }
+
+  .content-display p,
+  .prose p,
+  .rich-content p,
+  .article-content p,
+  .event-content p,
+  .news-content p {
+    color: black !important;
+  }
+
+  .content-display li,
+  .prose li,
+  .rich-content li,
+  .article-content li,
+  .event-content li,
+  .news-content li {
+    color: black !important;
+  }
+}

@@ -1,0 +1,67 @@
+<svg width="128" height="128" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <!-- Gradient definitions -->
+        <linearGradient id="blueGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="orangeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#F97316;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#DC2626;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+
+    <!-- Dark blue background circle -->
+    <circle cx="100" cy="100" r="95" fill="#000033" stroke="white" stroke-width="8" />
+
+    <!-- Network/Connected nodes icon (top left) -->
+    <g transform="translate(60, 45)">
+        <circle cx="0" cy="0" r="3" fill="#F97316" />
+        <circle cx="8" cy="0" r="3" fill="#F97316" />
+        <circle cx="4" cy="7" r="3" fill="#F97316" />
+        <line x1="0" y1="0" x2="8" y2="0" stroke="#F97316" stroke-width="1.5" />
+        <line x1="0" y1="0" x2="4" y2="7" stroke="#F97316" stroke-width="1.5" />
+        <line x1="8" y1="0" x2="4" y2="7" stroke="#F97316" stroke-width="1.5" />
+    </g>
+
+    <!-- Top arc text -->
+    <path id="topArc" d="M 30 100 A 70 70 0 0 1 170 100" fill="none" />
+    <text>
+        <textPath href="#topArc" startOffset="50%" text-anchor="middle" fill="white"
+            font-family="Arial, sans-serif" font-size="12" font-weight="bold">
+            VIỆN KỸ THUẬT VÀ CÔNG NGHỆ
+        </textPath>
+    </text>
+
+    <!-- Bottom arc text -->
+    <path id="bottomArc" d="M 170 100 A 70 70 0 0 1 30 100" fill="none" />
+    <text>
+        <textPath href="#bottomArc" startOffset="50%" text-anchor="middle" fill="white"
+            font-family="Arial, sans-serif" font-size="10" font-weight="bold">
+            CÂU LẠC BỘ BÌNH DÂN HỌC VỤ SỐ
+        </textPath>
+    </text>
+
+    <!-- UP letters -->
+    <g transform="translate(100, 100)">
+        <!-- Letter U -->
+        <path d="M -25 -15 L -25 15 Q -25 20 -20 20 L -15 20 Q -10 20 -10 15 L -10 -15"
+            fill="url(#blueGradient)" stroke="none" />
+
+        <!-- Letter P -->
+        <path d="M 5 -15 L 5 20 L 10 20 Q 15 20 15 15 L 15 0 Q 15 -5 10 -5 L 5 -5 Z M 5 -15 L 5 -5"
+            fill="url(#orangeGradient)" stroke="none" />
+    </g>
+
+    <!-- Center text below UP -->
+    <text x="100" y="130" text-anchor="middle" fill="white" font-family="Arial, sans-serif"
+        font-size="16" font-weight="bold">
+        IT.UP
+    </text>
+
+    <!-- Slogan -->
+    <text x="100" y="145" text-anchor="middle" fill="white" font-family="Arial, sans-serif"
+        font-size="8" font-style="italic">
+        I trigger, U transform
+    </text>
+</svg>
