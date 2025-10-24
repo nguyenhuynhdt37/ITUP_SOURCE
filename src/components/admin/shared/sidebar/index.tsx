@@ -8,11 +8,9 @@ import {
   FaBuilding,
   FaCalendarAlt,
   FaChartBar,
-  FaCog,
   FaFileAlt,
   FaHome,
   FaNewspaper,
-  FaSignOutAlt,
   FaTimes,
   FaUsers,
 } from "react-icons/fa";
@@ -63,13 +61,16 @@ export const Sidebar = () => {
     { name: "Tài liệu", href: "/admin/documents", icon: FaFileAlt },
     { name: "Câu lạc bộ", href: "/admin/club", icon: FaBuilding },
     { name: "Thống kê", href: "/admin/analytics", icon: FaChartBar },
-    { name: "Cài đặt", href: "/admin/settings", icon: FaCog },
+    { name: "Trang chủ", href: "/", icon: FaHome },
   ];
 
   // Improved active state logic
   const isActive = (href: string) => {
     if (href === "/admin") {
       return pathname === "/admin";
+    }
+    if (href === "/") {
+      return pathname === "/";
     }
     return pathname.startsWith(href);
   };
@@ -162,12 +163,6 @@ export const Sidebar = () => {
                 admin@itup.edu.vn
               </p>
             </div>
-            <button
-              className="text-white/60 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10"
-              title="Đăng xuất"
-            >
-              <FaSignOutAlt className="w-4 h-4" />
-            </button>
           </div>
         </div>
       </div>

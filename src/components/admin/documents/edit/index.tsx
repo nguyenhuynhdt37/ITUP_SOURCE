@@ -229,10 +229,12 @@ export const EditDocument = ({ documentId }: EditDocumentProps) => {
     setHasFileChanged(true);
     setError("");
 
+    // Extract text ngay khi chọn file để có thể dùng cho AI generation
     try {
       const text = await extractTextFromPDF(file);
       setExtractedText(text);
     } catch (err) {
+      console.error("Error extracting text:", err);
       setExtractedText("");
     }
   };
@@ -475,11 +477,15 @@ export const EditDocument = ({ documentId }: EditDocumentProps) => {
     resourceId: string,
     file: File,
     chunkSize: number,
-    chunkOverlap: number
+    chunkOverlap: number,
+    existingText?: string
   ) => {
     try {
-      // 1️⃣ Trích text từ file
-      const text = await extractTextFromPDF(file);
+      // 1️⃣ Sử dụng text có sẵn hoặc trích text từ file
+      let text = existingText;
+      if (!text) {
+        text = await extractTextFromPDF(file);
+      }
 
       // Validate text content
       if (!text || text.length < 20) {
@@ -562,12 +568,13 @@ export const EditDocument = ({ documentId }: EditDocumentProps) => {
       // Create a temporary file object for processing
       const tempFile = new File([text], "temp.txt", { type: "text/plain" });
 
-      // Use the same processFileChunks function
+      // Use the same processFileChunks function với text đã có sẵn
       await processFileChunks(
         resourceId,
         tempFile,
         formData.chunkSize,
-        formData.chunkOverlap
+        formData.chunkOverlap,
+        text // Truyền text đã có sẵn
       );
     } catch (err) {
       throw err;
@@ -611,9 +618,15 @@ export const EditDocument = ({ documentId }: EditDocumentProps) => {
 
         fileData = await uploadFile(formData.file);
 
-        // Trích xuất text cho embedding và chunk
-        textForEmbedding = await extractTextFromPDF(formData.file);
-        setExtractedText(textForEmbedding);
+        // Sử dụng text đã extract khi chọn file
+        textForEmbedding = extractedText;
+
+        // Validate text trước khi tạo embedding
+        if (!textForEmbedding || textForEmbedding.trim().length < 20) {
+          throw new Error(
+            "Không thể trích xuất nội dung từ file. Vui lòng kiểm tra định dạng file."
+          );
+        }
 
         // Tạo embedding theo cơ chế 25KB/chunk và cộng vector
         newEmbedding = await buildResourceEmbedding(textForEmbedding.trim());
@@ -659,7 +672,8 @@ export const EditDocument = ({ documentId }: EditDocumentProps) => {
           // Lấy text để xử lý chunk
           if (!textForEmbedding) {
             if (formData.file) {
-              textForEmbedding = await extractTextFromPDF(formData.file);
+              // Sử dụng text đã extract ở bước trước
+              textForEmbedding = extractedText;
             } else {
               // Nếu không có file mới → lấy text từ bản cũ đã extract hoặc fetch từ DB
               const { data: resource } = await supabase
@@ -689,7 +703,8 @@ export const EditDocument = ({ documentId }: EditDocumentProps) => {
               documentId,
               tempFile,
               formData.chunkSize,
-              formData.chunkOverlap
+              formData.chunkOverlap,
+              textForEmbedding // Truyền text đã có sẵn
             );
           }
 

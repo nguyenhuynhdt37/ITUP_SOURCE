@@ -1,4 +1,5 @@
-import { callGoogleModel, createEmbedding } from "@/lib/promptGemini";
+import { callGemini } from "@/lib/callGoogleModel.server";
+import { createEmbeddingServer } from "@/lib/googleEmbed.server";
 import { supabase } from "@/lib/supabaseClient";
 import { NextResponse } from "next/server";
 
@@ -135,14 +136,18 @@ export async function POST(req: Request) {
     // }
 
     // ✅ 3️⃣ Tạo embedding và tìm kiến thức liên quan
-    const embedding = await createEmbedding(query);
-    const { data, error } = await supabase.rpc("hyper_search_embedding_only", {
-      limit_count: 2,
-      query_embedding: embedding,
-    } as any);
+    const embedding: number[] = await createEmbeddingServer(query);
+    const embeddingVector = `(${embedding.join(",")})`;
+    const { data, error }: any = await supabase.rpc(
+      "hyper_search_embedding_only",
+      {
+        limit_count: 2,
+        query_embedding: embedding,
+      } as any
+    );
     if (error) throw error;
 
-    if (!data || (data as any[]).length === 0) {
+    if (!data || data.length === 0) {
       return NextResponse.json({
         need_query: false,
         answer:
@@ -153,8 +158,8 @@ export async function POST(req: Request) {
 
     // ✅ 4️⃣ Lấy top 2 kết quả làm context
     const context =
-      data && (data as any[]).length > 0
-        ? (data as any[])
+      data && data.length > 0
+        ? data
             .map(
               (r: any, i: number) =>
                 `content: [#${i + 1}] ${r.content ?? ""}, resource_id: ${
@@ -163,8 +168,9 @@ export async function POST(req: Request) {
             )
             .join("\n\n")
         : "";
+
     // ✅ 5️⃣ Gọi model chat (Gemini) để tạo câu trả lời
-    const answer = await callGoogleModel(
+    const answer = await callGemini(
       `
       Bạn là ITUP – trợ lý ảo thân thiện và nhiệt tình của Câu lạc bộ IT UP, Trường Đại học Vinh.
       
@@ -220,20 +226,20 @@ export async function POST(req: Request) {
       Câu hỏi: "${query}"
       `
     );
-
+    // return NextResponse.json({ answer });
     // ✅ 6️⃣ Parse answer để lấy resource_id
     let parsedAnswer;
-    let resourceIds: string[] = [];
+    let resourceIds: any[] = [];
 
     try {
       // Tìm JSON trong answer nếu có
-      const jsonMatch = answer?.match(/\{[\s\S]*\}/);
+      const jsonMatch: any = answer?.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
         const jsonStr = jsonMatch[0];
         parsedAnswer = JSON.parse(jsonStr);
         const rawResourceIds = parsedAnswer.resource_id || [];
         // Lọc bỏ duplicate resource_id
-        resourceIds = [...new Set(rawResourceIds as string[])];
+        resourceIds = [...new Set(rawResourceIds)];
       } else {
         // Nếu không có JSON, trả về answer gốc
         parsedAnswer = { answer: answer?.trim() || "" };
@@ -248,7 +254,7 @@ export async function POST(req: Request) {
     let sourceInfo = "";
     if (resourceIds.length > 0) {
       try {
-        const { data: resources, error } = await supabase
+        const { data: resources, error }: any = await supabase
           .from("resources")
           .select("id, title, description, file_type, created_at")
           .in("id", resourceIds);

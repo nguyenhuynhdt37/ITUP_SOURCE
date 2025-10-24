@@ -85,6 +85,7 @@ export const CreateDocument = () => {
     setFormData({ ...formData, file });
     setError("");
 
+    // Extract text ngay khi chọn file để có thể dùng cho AI generation
     try {
       const text = await extractPDFText(file);
       setExtractedText(text);
@@ -168,7 +169,40 @@ export const CreateDocument = () => {
   };
 
   const createEmbedding = async (text: string): Promise<number[]> => {
-    return await createEmbedding(text);
+    try {
+      console.log(
+        "🔍 Creating embedding for text:",
+        text.substring(0, 100) + "..."
+      );
+
+      const res = await fetch("/api/embed", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error("❌ Embedding API error:", res.status, errorText);
+        throw new Error(`Embedding API failed: ${res.status} - ${errorText}`);
+      }
+
+      const data = await res.json();
+      console.log("✅ Embedding response:", {
+        hasEmbedding: !!data?.embedding,
+        isArray: Array.isArray(data?.embedding),
+        length: data?.embedding?.length,
+      });
+
+      if (!data?.embedding || !Array.isArray(data.embedding)) {
+        throw new Error("Invalid embedding response: " + JSON.stringify(data));
+      }
+
+      return data.embedding as number[];
+    } catch (error) {
+      console.error("💥 Embedding creation failed:", error);
+      throw error;
+    }
   };
 
   const sumVectors = (vectors: number[][]): number[] => {
@@ -190,16 +224,31 @@ export const CreateDocument = () => {
 
     // 25KB per chunk as requested
     const chunks = splitText(cleaned, 25000);
+    console.log(
+      `🧩 Processing ${chunks.length} chunks for resource embedding...`
+    );
+
     const vectors: number[][] = [];
-    for (const chunk of chunks) {
+    for (let i = 0; i < chunks.length; i++) {
       try {
-        const emb = await createEmbedding(chunk);
+        console.log(`📝 Processing chunk ${i + 1}/${chunks.length}...`);
+        const emb = await createEmbedding(chunks[i]);
         vectors.push(emb);
+        console.log(`✅ Chunk ${i + 1} embedding created successfully`);
       } catch (e) {
-        console.error("Chunk embedding failed, skipping chunk:", e);
+        console.error(`❌ Chunk ${i + 1} embedding failed, skipping:`, e);
+        // Continue with other chunks instead of failing completely
       }
     }
-    if (!vectors.length) return null;
+
+    if (!vectors.length) {
+      console.error("❌ No successful embeddings created");
+      return null;
+    }
+
+    console.log(
+      `✅ Successfully created ${vectors.length}/${chunks.length} embeddings`
+    );
     // Sum vectors as per requirement
     return sumVectors(vectors);
   };
@@ -226,10 +275,29 @@ export const CreateDocument = () => {
       clearInterval(interval);
       setUploadProgress(100);
 
+      // Validate text trước khi tạo embedding
+      if (!extractedText || extractedText.trim().length < 20) {
+        throw new Error(
+          "Không thể trích xuất nội dung từ file. Vui lòng kiểm tra định dạng file."
+        );
+      }
+
       // Build resource-level embedding by splitting into 25KB chunks and summing vectors
-      const resourceEmbeddingValue = await buildResourceEmbedding(
-        extractedText.trim()
-      );
+      let resourceEmbeddingValue = null;
+      try {
+        resourceEmbeddingValue = await buildResourceEmbedding(
+          extractedText.trim()
+        );
+        if (!resourceEmbeddingValue) {
+          console.warn(
+            "⚠️ Không thể tạo resource embedding, tiếp tục mà không có embedding"
+          );
+        }
+      } catch (embeddingError) {
+        console.error("❌ Resource embedding failed:", embeddingError);
+        console.warn("⚠️ Tiếp tục mà không có resource embedding");
+        // Không throw error, tiếp tục với resourceEmbeddingValue = null
+      }
       // ✅ Insert vào bảng resources
       const { data, error } = await supabase
         .from("resources")
@@ -257,17 +325,17 @@ export const CreateDocument = () => {
             resourceId,
             formData.file,
             formData.chunkSize,
-            formData.chunkOverlap
+            formData.chunkOverlap,
+            extractedText // Truyền text đã extract sẵn
           );
           console.log("✅ Chunking process completed successfully");
         } catch (chunkError) {
           console.error("❌ Chunking process failed:", chunkError);
-          setError(
-            `Lỗi khi xử lý chunks: ${
-              chunkError instanceof Error ? chunkError.message : "Unknown error"
-            }`
+          // Không crash toàn bộ, chỉ warning và tiếp tục
+          console.warn("⚠️ Chunking failed nhưng vẫn tiếp tục tạo tài liệu");
+          setSuccess(
+            "Tài liệu đã được tạo thành công! (Một số chunks có thể bị lỗi)"
           );
-          return; // Stop the process if chunking fails
         }
       }
 
@@ -290,13 +358,17 @@ export const CreateDocument = () => {
     resourceId: string,
     file: File,
     chunkSize: number,
-    chunkOverlap: number
+    chunkOverlap: number,
+    existingText?: string
   ) => {
     try {
       console.log("🧩 Chunking file:", file.name);
 
-      // 1️⃣ Trích text từ file
-      const text = await extractTextFromPDF(file);
+      // 1️⃣ Sử dụng text có sẵn hoặc trích text từ file
+      let text = existingText;
+      if (!text) {
+        text = await extractTextFromPDF(file);
+      }
 
       if (!text || text.length < 20) {
         console.warn("⚠️ Không có nội dung để chunk.");
@@ -367,42 +439,70 @@ export const CreateDocument = () => {
       console.log(`🧠 Tổng số chunk thực tế: ${chunks.length}`);
 
       // 6️⃣ Lưu từng chunk kèm embedding
+      let successfulChunks = 0;
       for (let i = 0; i < chunks.length; i++) {
         const c = chunks[i];
-        const res = await fetch("/api/embed", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text: c.text }),
-        });
+        try {
+          console.log(
+            `🔍 Creating embedding for chunk ${i + 1}/${chunks.length}...`
+          );
 
-        if (!res.ok) throw new Error(`Embedding API lỗi (${res.status})`);
-        const data = await res.json();
+          const res = await fetch("/api/embed", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: c.text }),
+          });
 
-        const embedding = data.embedding;
-        if (!embedding || !Array.isArray(embedding)) {
-          console.warn(`⚠️ Chunk ${i + 1} không có embedding hợp lệ, bỏ qua.`);
-          continue;
-        }
+          if (!res.ok) {
+            const errorText = await res.text();
+            console.error(
+              `❌ Embedding API lỗi cho chunk ${i + 1}:`,
+              res.status,
+              errorText
+            );
+            continue; // Skip chunk này, tiếp tục với chunk tiếp theo
+          }
 
-        const { error: insertError } = await supabase
-          .from("resource_chunks")
-          .insert({
-            resource_id: resourceId,
-            chunk_index: i,
-            content: c.text,
-            embedding,
-            chunk_size: chunkSize,
-            overlap: safeOverlap,
-          } as any);
+          const data = await res.json();
+          const embedding = data.embedding;
 
-        if (insertError) {
-          console.error(`❌ Lỗi insert chunk ${i + 1}:`, insertError);
-        } else {
-          console.log(`✅ Chunk ${i + 1}/${chunks.length} inserted`);
+          if (!embedding || !Array.isArray(embedding)) {
+            console.warn(
+              `⚠️ Chunk ${i + 1} không có embedding hợp lệ, bỏ qua.`
+            );
+            continue;
+          }
+
+          const { error: insertError } = await supabase
+            .from("resource_chunks")
+            .insert({
+              resource_id: resourceId,
+              chunk_index: i,
+              content: c.text,
+              embedding,
+              chunk_size: chunkSize,
+              overlap: safeOverlap,
+            } as any);
+
+          if (insertError) {
+            console.error(`❌ Lỗi insert chunk ${i + 1}:`, insertError);
+          } else {
+            console.log(
+              `✅ Chunk ${i + 1}/${chunks.length} inserted successfully`
+            );
+            successfulChunks++;
+          }
+        } catch (chunkError) {
+          console.error(`❌ Lỗi xử lý chunk ${i + 1}:`, chunkError);
+          // Tiếp tục với chunk tiếp theo thay vì crash
         }
 
         setChunkingProgress(Math.round(((i + 1) / chunks.length) * 100));
       }
+
+      console.log(
+        `🎯 Hoàn tất: ${successfulChunks}/${chunks.length} chunks được xử lý thành công`
+      );
 
       console.log("🎯 Hoàn tất chunking và embedding!");
     } catch (err) {

@@ -20,8 +20,9 @@ const Header = () => {
     { name: "Sự kiện", href: "/events" },
     { name: "Tài liệu", href: "/documents" },
     { name: "Liên hệ", href: "/contact" },
-    { name: "Chat", href: "/chat" },
+    // { name: "Chat", href: "/chat" },
     { name: "Quiz", href: "/quiz" },
+    { name: "Admin", href: "/admin" },
   ];
 
   return (

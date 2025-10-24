@@ -9,9 +9,7 @@ export async function createEmbedding(text: string): Promise<number[]> {
     throw new Error("❌ Văn bản trống, không thể tạo embedding");
 
   try {
-    const url = `/api/embed`;
-
-    const res = await fetch(url, {
+    const res = await fetch("/api/embed", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text: text.trim() }),
@@ -155,12 +153,4 @@ export async function generateArticleIdeas(topic: string, count = 5) {
     .map((i) => i.trim())
     .filter(Boolean)
     .slice(0, count);
-}
-
-/** 🔗 Embedding cho content */
-export const embedContent = (c: string) => createEmbedding(c);
-
-export function normalizeEmbedding(vec: number[]): number[] {
-  const norm = Math.sqrt(vec.reduce((sum, val) => sum + val * val, 0));
-  return norm === 0 ? vec : vec.map((v) => v / norm);
 }

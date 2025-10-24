@@ -270,36 +270,7 @@ const HomePage = () => {
       if (error) {
         console.log("Error fetching documents:", error);
         // Use mock data if database error
-        setDocumentsData([
-          {
-            id: 1,
-            title: "Quy chế hoạt động Câu lạc bộ IT UP",
-            file_type: "PDF",
-            file_size: 2411520, // 2.3 MB in bytes
-            category: "Quy chế",
-          },
-          {
-            id: 2,
-            title: "Hướng dẫn tham gia các hoạt động",
-            file_type: "PDF",
-            file_size: 1887436, // 1.8 MB
-            category: "Hướng dẫn",
-          },
-          {
-            id: 3,
-            title: "Tài liệu học tập - Lập trình Python",
-            file_type: "ZIP",
-            file_size: 47448678, // 45.2 MB
-            category: "Học tập",
-          },
-          {
-            id: 4,
-            title: "Slide bài giảng - Web Development",
-            file_type: "PPTX",
-            file_size: 12689817, // 12.1 MB
-            category: "Học tập",
-          },
-        ]);
+        setDocumentsData([]);
         return;
       }
 

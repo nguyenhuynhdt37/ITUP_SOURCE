@@ -231,7 +231,7 @@ export const Dashboard = () => {
               <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl">
                 <FaMobile className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-white font-bold text-lg mb-2">Next.js 14</h3>
+              <h3 className="text-white font-bold text-lg mb-2">Next.js 15</h3>
               <p className="text-white/70 text-sm">React Framework</p>
             </div>
 

@@ -4,7 +4,14 @@ import { getAdminUser } from "@/lib/getAdminUser";
 import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FaEye, FaEyeSlash, FaLock, FaSpinner, FaUser } from "react-icons/fa";
+import {
+  FaEye,
+  FaEyeSlash,
+  FaHome,
+  FaLock,
+  FaSpinner,
+  FaUser,
+} from "react-icons/fa";
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -83,6 +90,16 @@ export const LoginForm = () => {
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-[#3b82f6]/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#60a5fa]/10 rounded-full blur-3xl"></div>
       </div>
+
+      {/* Back to Home Button */}
+      <button
+        onClick={() => router.push("/")}
+        className="absolute top-6 left-6 flex items-center space-x-2 px-4 py-2 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 group z-20"
+        title="Về trang chủ"
+      >
+        <FaHome className="w-4 h-4 group-hover:text-blue-400" />
+        <span className="text-sm">Về trang chủ</span>
+      </button>
 
       <div className="relative z-10 w-full max-w-md">
         {/* Logo và Header */}

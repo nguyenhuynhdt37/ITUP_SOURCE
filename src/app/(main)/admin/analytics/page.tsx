@@ -1,11 +1,11 @@
 "use client";
 
-import { Dashboard } from "@/components/admin/dashboard";
+import { Analytics } from "@/components/admin/analytics";
 import { getAdminUser } from "@/lib/getAdminUser";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const AdminPage = () => {
+const AnalyticsPage = () => {
   const router = useRouter();
   const [isChecking, setIsChecking] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -48,7 +48,7 @@ const AdminPage = () => {
     return null; // Sẽ redirect trong useEffect
   }
 
-  return <Dashboard />;
+  return <Analytics />;
 };
 
-export default AdminPage;
+export default AnalyticsPage;

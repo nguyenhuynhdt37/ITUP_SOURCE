@@ -39,7 +39,7 @@ export const ChatComponent = () => {
       id: "1",
       type: "bot",
       content:
-        "🎉 Xin chào! Tôi là ITUP - trợ lý ảo nhiệt tình của Câu lạc bộ IT UP! 💻✨\n\nTôi rất vui được giúp bạn khám phá về:\n📚 Tài liệu và quy chế câu lạc bộ\n🎯 Các sự kiện và hoạt động sắp tới\n👥 Thông tin thành viên và ban chủ nhiệm\n💡 Hướng dẫn tham gia câu lạc bộ\n\nBạn muốn tìm hiểu gì về ITUP nhỉ? 😊",
+        "🎉 Xin chào! Tôi là ITUP - trợ lý ảo nhiệt tình của Câu lạc bộ IT UP! 💻✨\nBạn cần tôi giúp gì ạ? 😊",
       timestamp: new Date(),
     },
   ]);
@@ -303,10 +303,13 @@ export const ChatComponent = () => {
                       </div>
                       <div className="flex items-center justify-between mt-2">
                         <span className="text-xs opacity-70">
-                          {message.timestamp.toLocaleTimeString("vi-VN", {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
+                          {new Date(message.timestamp).toLocaleTimeString(
+                            "vi-VN",
+                            {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            }
+                          )}
                         </span>
                         {message.type === "bot" && (
                           <button
