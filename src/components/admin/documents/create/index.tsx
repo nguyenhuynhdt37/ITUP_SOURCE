@@ -1,6 +1,6 @@
 "use client";
 
-import { extractTextFromPDFClient } from "@/lib/extratTextPDF";
+import { extractTextFromPDF } from "@/lib/extractTextFromPDF";
 import { supabase } from "@/lib/supabaseClient";
 import { encode } from "gpt-tokenizer"; // ✅ npm install gpt-tokenizer
 import { useRouter } from "next/navigation";
@@ -86,7 +86,7 @@ export const CreateDocument = () => {
     setError("");
 
     try {
-      const text = await extractTextFromPDF(file);
+      const text = await extractPDFText(file);
       setExtractedText(text);
     } catch (err) {
       console.error("Error extracting text:", err);
@@ -296,17 +296,7 @@ export const CreateDocument = () => {
       console.log("🧩 Chunking file:", file.name);
 
       // 1️⃣ Trích text từ file
-      let text: string;
-      try {
-        text = await extractTextFromPDF(file);
-        console.log(
-          `📄 Extracted text length: ${text?.length || 0} characters`
-        );
-        console.log(`📄 Text preview: ${text?.substring(0, 200)}...`);
-      } catch (extractError) {
-        console.error("❌ Lỗi extract text:", extractError);
-        throw new Error(`Không thể đọc nội dung file: ${extractError}`);
-      }
+      const text = await extractTextFromPDF(file);
 
       if (!text || text.length < 20) {
         console.warn("⚠️ Không có nội dung để chunk.");
@@ -433,11 +423,20 @@ export const CreateDocument = () => {
   };
 
   /** ========== PDF TEXT EXTRACTION ========== */
-  const extractTextFromPDF = async (file: File): Promise<string> => {
+  const extractPDFText = async (file: File): Promise<string> => {
     if (file.type === "application/pdf") {
       try {
-        const text = await extractTextFromPDFClient(file);
-        return text || "Không thể đọc nội dung PDF.";
+        const form = new FormData();
+        form.append("file", file);
+
+        const res = await fetch("/api/pdf-extract", {
+          method: "POST",
+          body: form,
+        });
+        const data = await res.json();
+
+        if (data.error) throw new Error(data.error);
+        return data.text || data.note || "";
       } catch (err) {
         console.error("PDF extract error:", err);
         return "Không thể đọc nội dung PDF.";

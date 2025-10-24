@@ -1,6 +1,6 @@
 "use client";
 
-import { extractTextFromPDFClient } from "@/lib/extratTextPDF";
+import { extractTextFromPDF } from "@/lib/extractTextFromPDF";
 import { supabase } from "@/lib/supabaseClient";
 import { encode } from "gpt-tokenizer";
 import { useRouter } from "next/navigation";
@@ -581,24 +581,6 @@ export const EditDocument = ({ documentId }: EditDocumentProps) => {
       return decode(tokens);
     } catch (error) {
       return tokens.map((token) => String.fromCharCode(token)).join("");
-    }
-  };
-
-  const extractTextFromPDF = async (file: File): Promise<string> => {
-    if (file.type === "application/pdf") {
-      try {
-        const text = await extractTextFromPDFClient(file);
-        return text || "Không thể đọc nội dung PDF.";
-      } catch (err) {
-        console.error("PDF extract error:", err);
-        return "Không thể đọc nội dung PDF.";
-      }
-    } else {
-      try {
-        return await file.text();
-      } catch {
-        return "Không thể đọc nội dung file.";
-      }
     }
   };
 

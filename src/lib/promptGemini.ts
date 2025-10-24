@@ -3,34 +3,13 @@
  */
 const EMBED_DIM = 3072;
 
-// Tự động lấy URL từ browser hoặc server
-const getAPIBase = () => {
-  // Trên client side (browser)
-  if (typeof window !== "undefined") {
-    return window.location.origin;
-  }
-
-  // Trên server side
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
-  }
-
-  if (process.env.NEXT_PUBLIC_APP_URL) {
-    return process.env.NEXT_PUBLIC_APP_URL;
-  }
-
-  // Fallback cho development
-  return "http://localhost:3000";
-};
-
 /** 🧠 Tạo embedding từ văn bản */
 export async function createEmbedding(text: string): Promise<number[]> {
   if (!text?.trim())
     throw new Error("❌ Văn bản trống, không thể tạo embedding");
 
   try {
-    const baseUrl = getAPIBase();
-    const url = `${baseUrl.replace(/\/$/, "")}/api/embed`;
+    const url = `/api/embed`;
 
     const res = await fetch(url, {
       method: "POST",
@@ -65,8 +44,7 @@ export async function createEmbedding(text: string): Promise<number[]> {
 export async function callGoogleModel(prompt: string): Promise<string> {
   if (!prompt?.trim()) return "";
   try {
-    const baseUrl = getAPIBase();
-    const url = `${baseUrl.replace(/\/$/, "")}/api/generate`;
+    const url = `/api/generate`;
     const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

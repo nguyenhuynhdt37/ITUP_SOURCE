@@ -1,1 +1,1 @@
-Test PDF content
+Test PDF content with Vietnamese text: Đây là tài liệu test

@@ -18,7 +18,7 @@ async function getSourceDetails(resourceIds: string[]) {
     }
 
     return (
-      resources?.map((resource) => ({
+      resources?.map((resource: any) => ({
         id: resource.id,
         title: resource.title,
         description: resource.description,
@@ -142,7 +142,7 @@ export async function POST(req: Request) {
     } as any);
     if (error) throw error;
 
-    if (!data || data.length === 0) {
+    if (!data || (data as any[]).length === 0) {
       return NextResponse.json({
         need_query: false,
         answer:
@@ -153,8 +153,8 @@ export async function POST(req: Request) {
 
     // ✅ 4️⃣ Lấy top 2 kết quả làm context
     const context =
-      data && data.length > 0
-        ? data
+      data && (data as any[]).length > 0
+        ? (data as any[])
             .map(
               (r: any, i: number) =>
                 `content: [#${i + 1}] ${r.content ?? ""}, resource_id: ${
@@ -233,7 +233,7 @@ export async function POST(req: Request) {
         parsedAnswer = JSON.parse(jsonStr);
         const rawResourceIds = parsedAnswer.resource_id || [];
         // Lọc bỏ duplicate resource_id
-        resourceIds = [...new Set(rawResourceIds)];
+        resourceIds = [...new Set(rawResourceIds as string[])];
       } else {
         // Nếu không có JSON, trả về answer gốc
         parsedAnswer = { answer: answer?.trim() || "" };
