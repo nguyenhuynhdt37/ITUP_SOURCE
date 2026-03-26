@@ -16,6 +16,12 @@ const nextConfig = {
       { protocol: "https", hostname: "via.placeholder.com" },
       { protocol: "https", hostname: "picsum.photos" },
       { protocol: "https", hostname: "sufaegmzgctorjndvegd.supabase.co" },
+      {
+        protocol: 'https',
+        hostname: 'sufaegmzgctorjndvegd.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/public/**',
+      },
     ],
   },
 
